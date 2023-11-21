@@ -1,24 +1,27 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  post: Object,
+})
+</script>
 
 <template>
   <div class="post-container py-8">
     <h3 class="text-3xl font-bold">
-      <NuxtLink :to="`/posts/1`">Title of Post</NuxtLink>
+      <NuxtLink :to="`/posts/${props.post.id}`">
+        {{ props.post.title }}
+      </NuxtLink>
     </h3>
     <div class="post-meta text-gray-700 flex items-center space-x-2">
-      <div>Feb 2, 2022</div>
+      <div>{{ props.post.created_at }}</div>
       <div>&middot;</div>
-      <div>Chandan Ojha</div>
+      <div>{{ props.post.user.name }}</div>
     </div>
     <div class="post-preview leading-relaxed mt-4 line-clamp-3">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, quod iste
-      tempora dicta exercitationem similique! Quos est dignissimos optio
-      aspernatur, sint quo velit odit adipisci ipsa, dolores minus totam
-      accusamus.
+      {{ props.post.body }}
     </div>
     <div class="mt-4">
       <NuxtLink
-        :to="`/posts/1`"
+        :to="`/posts/${props.post.id}`"
         class="bg-blue-700 hover:bg-blue-800 text-white rounded inline-block px-4 py-2"
       >
         Read More
