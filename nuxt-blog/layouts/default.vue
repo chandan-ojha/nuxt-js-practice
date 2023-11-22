@@ -16,6 +16,15 @@ const title = useState('title', () => 'Nuxt.js Blog')
               <NuxtLink to="/">Home</NuxtLink>
             </li>
             <li>
+              <NuxtLink to="/login">Login</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/register">Register</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/my-info">My Info</NuxtLink>
+            </li>
+            <li>
               <NuxtLink to="/create">Create</NuxtLink>
             </li>
             <li>

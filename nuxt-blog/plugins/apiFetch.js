@@ -3,6 +3,12 @@ export default defineNuxtPlugin(nuxtApp => {
 
   nuxtApp.provide(
     'apiFetch',
-    $fetch.create({ baseURL: config.public.BASE_URL })
+    $fetch.create({
+      baseURL: config.public.BASE_URL,
+      headers: {
+        Accept: 'application/json',
+        'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
+      },
+    })
   )
 })
