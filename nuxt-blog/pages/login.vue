@@ -27,7 +27,6 @@ async function login() {
 <template>
   <div class="container mx-auto w-1/3 py-8">
     <Title>Login | {{ title }}</Title>
-
     <form action="#" class="space-y-6" @submit.prevent="login">
       <div>
         <label for="email" class="block font-semibold">Email</label>
