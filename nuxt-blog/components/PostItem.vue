@@ -1,4 +1,5 @@
 <script setup>
+import { format } from 'date-fns'
 const props = defineProps({
   post: Object,
 })
@@ -12,7 +13,7 @@ const props = defineProps({
       </NuxtLink>
     </h3>
     <div class="post-meta text-gray-700 flex items-center space-x-2">
-      <div>{{ props.post.created_at }}</div>
+      <div>{{ format(new Date(props.post.created_at), 'MMMM dd, yyyy') }}</div>
       <div>&middot;</div>
       <div>{{ props.post.user.name }}</div>
     </div>

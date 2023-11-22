@@ -3,15 +3,40 @@ const title = ref('')
 const body = ref('')
 const isLoading = ref(false)
 const errors = ref([])
-
-function createPost() {
-  alert('create post')
+const router = useRouter()
+async function createPost() {
+  isLoading.value = true
+  try {
+    const post = await useNuxtApp().$apiFetch(`/api/post`, {
+      method: 'POST',
+      body: {
+        title: title.value,
+        body: body.value,
+      },
+    })
+    isLoading.value = false
+    title.value = ''
+    body.value = ''
+    alert('creating post')
+    router.push('/')
+  } catch (err) {
+    // console.log(err.data)
+    errors.value = Object.values(err.data.errors).flat()
+    isLoading.value = false
+  }
 }
 </script>
 
 <template>
   <div class="container mx-auto w-1/2 py-8">
-    <div class="errors text-red-600 mb-4">Error goes here</div>
+    <ul
+      v-if="errors.length > 0"
+      className="mb-4 list-disc list-inside text-sm text-red-600"
+    >
+      <li v-for="(error, index) in errors" :key="index">
+        {{ error }}
+      </li>
+    </ul>
     <form action="#" class="space-y-6" @submit.prevent="createPost">
       <div>
         <label for="title" class="block font-semibold">Title</label>
@@ -40,6 +65,7 @@ function createPost() {
         >
           Create Post
         </button>
+        <span v-show="isLoading" class="ml-4">Loading...</span>
       </div>
     </form>
   </div>
