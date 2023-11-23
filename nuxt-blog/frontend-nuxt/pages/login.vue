@@ -3,7 +3,7 @@ const title = useState('title')
 const email = ref('')
 const password = ref('')
 const isLoading = ref(false)
-const erros = ref([])
+const errors = ref([])
 
 const { $apiFetch } = useNuxtApp()
 
@@ -13,20 +13,36 @@ function csrf() {
 
 async function login() {
   await csrf()
-
-  await $apiFetch('/login', {
-    method: 'POST',
-    body: {
-      email: email.value,
-      password: password.value,
-    },
-  })
+  isLoading.value = true
+  try {
+    await $apiFetch('/login', {
+      method: 'POST',
+      body: {
+        email: email.value,
+        password: password.value,
+      },
+    })
+    // router.push('/my-info')
+    window.location.pathname = '/my-info'
+  } catch (err) {
+    console.log(err.data)
+    errors.value = Object.values(err.data.errors).flat()
+  }
+  isLoading.value = false
 }
 </script>
 
 <template>
   <div class="container mx-auto w-1/3 py-8">
     <Title>Login | {{ title }}</Title>
+    <ul
+      v-if="errors.length > 0"
+      className="mb-4 list-disc list-inside text-sm text-red-600"
+    >
+      <li v-for="(error, index) in errors" :key="index">
+        {{ error }}
+      </li>
+    </ul>
     <form action="#" class="space-y-6" @submit.prevent="login">
       <div>
         <label for="email" class="block font-semibold">Email</label>
@@ -53,6 +69,7 @@ async function login() {
         >
           Login
         </button>
+        <span v-show="isLoading" class="ml-4">Loading...</span>
       </div>
     </form>
   </div>
