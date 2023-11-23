@@ -7,10 +7,12 @@ const errors = ref([])
 
 const { $apiFetch } = useNuxtApp()
 
+//fetch csrf from server
 function csrf() {
   return $apiFetch('/sanctum/csrf-cookie')
 }
 
+//login
 async function login() {
   await csrf()
   isLoading.value = true

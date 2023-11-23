@@ -8,9 +8,13 @@ const passwordConfirm = ref('')
 const isLoading = ref(false)
 const errors = ref([])
 const { $apiFetch } = useNuxtApp()
+
+//fetch csrf from server
 function csrf() {
   return $apiFetch('/sanctum/csrf-cookie')
 }
+
+//register
 async function register() {
   await csrf()
   isLoading.value = true
