@@ -1,4 +1,8 @@
 <script setup>
+definePageMeta({
+  middleware: ['guest'],
+})
+
 const title = useState('title')
 const email = ref('')
 const password = ref('')
