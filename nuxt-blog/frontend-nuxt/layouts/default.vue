@@ -1,5 +1,18 @@
 <script setup>
 const title = useState('title', () => 'Nuxt.js Blog')
+const { $apiFetch } = useNuxtApp()
+
+async function logout() {
+  try {
+    await $apiFetch('/logout', {
+      method: 'POST',
+    })
+  } catch (err) {
+    console.log(err.data)
+  } finally {
+    window.location.pathname = '/'
+  }
+}
 </script>
 
 <template>
@@ -32,6 +45,9 @@ const title = useState('title', () => 'Nuxt.js Blog')
             </li>
             <li>
               <NuxtLink to="/contact">Contact</NuxtLink>
+            </li>
+            <li>
+              <a href="#" @click.prevent="logout">Logout</a>
             </li>
           </ul>
         </div>
