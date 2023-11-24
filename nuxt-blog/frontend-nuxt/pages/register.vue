@@ -1,6 +1,9 @@
 <script setup>
+definePageMeta({
+  middleware: ['guest'],
+})
 const title = useState('title')
-const router = useRouter()
+// const router = useRouter()
 const name = ref('')
 const email = ref('')
 const password = ref('')
@@ -28,6 +31,12 @@ async function register() {
         password_confirmation: passwordConfirm.value,
       },
     })
+
+    //user info saved in local storage
+    const user = await $apiFetch('/api/user')
+    const { setUser } = useAuth()
+    setUser(user.name)
+
     alert('Registered')
     // router.push('/my-info')
     window.location.pathname = '/my-info'
@@ -35,6 +44,7 @@ async function register() {
     console.log(err.data)
     errors.value = Object.values(err.data.errors).flat()
   }
+
   isLoading.value = false
 }
 </script>

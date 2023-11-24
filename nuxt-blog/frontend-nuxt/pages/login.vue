@@ -28,6 +28,12 @@ async function login() {
         password: password.value,
       },
     })
+
+    //user info saved in local storage
+    const user = await $apiFetch('/api/user')
+    const { setUser } = useAuth()
+    setUser(user.name)
+
     // router.push('/my-info')
     window.location.pathname = '/my-info'
   } catch (err) {
